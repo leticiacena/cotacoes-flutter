@@ -22,7 +22,7 @@ Sua missão será:
 
 ---
 
-Preencha a checklist para fazer os desafio:
+Preencha a checklist para fazer o desafio:
 
 -   [ ] Fazer o fork do repositório para sua conta
 -   [ ] Executar `git clone` do seu fork no terminal para clonar o repositório, ou clonar de outra maneira
