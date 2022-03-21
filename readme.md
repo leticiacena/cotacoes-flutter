@@ -1,7 +1,11 @@
 ![](https://i.imgur.com/xG74tOh.png)
 
-Para fixar todo o conhecimento adquirido ao longo do módulo, desenvolveremos uma aplicação que realiza a cotação de moedas.
-Sua missão será:
+# Desafio | Módulo 2
+
+O objetivo deste desafio e aplicar todo o conhecimento adquirido ao longo do módulo, para desenvolver uma aplicação que realiza a cotação de moedas.
+
+
+### Sua missão será:
 - Consumir a API https://docs.awesomeapi.com.br/api-de-moedas;
 - Fornecer as opções de moedas a serem cotadas, sendo elas: Real, Libra Esterlina, Dólar Americano, Dólar Canadense, Peso Argentino e Iene;
 - Seguir a proposta de layout do Figma https://www.figma.com/file/BagX31a8VTHzCldH9vsEvF/Cotador?node-id=0%3A1;
