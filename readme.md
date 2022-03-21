@@ -34,4 +34,4 @@ Preencha a checklist para fazer o desafio:
 -   [ ] Após fazer o `git push`, será necessário fazer o `pull request` do seu repositório
 -   [ ] Copiar a url do seu fork e enviar na plataforma
 
-###### tags: `módulo 1` `front-end` `HTML` `CSS`
+###### tags: `módulo 2` `flutter` `desafio` `API`
