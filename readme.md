@@ -18,3 +18,16 @@ Sua missão será:
 - Fazer gestão de estado com um método diferente do setState, escolha qualquer package de acordo com seu gosto;
 - Tokenizar as cores do Figma num arquivo separado;
 - Utilizar Enums para simbolizar as moedas;
+
+
+---
+
+Preencha a checklist para fazer os desafio:
+
+-   [ ] Fazer o fork do repositório para sua conta
+-   [ ] Executar `git clone` do seu fork no terminal para clonar o repositório, ou clonar de outra maneira
+-   [ ] Após fazer e commitar todos os exercícios fazer o `git push` para seu fork
+-   [ ] Após fazer o `git push`, será necessário fazer o `pull request` do seu repositório
+-   [ ] Copiar a url do seu fork e enviar na plataforma
+
+###### tags: `módulo 1` `front-end` `HTML` `CSS`
