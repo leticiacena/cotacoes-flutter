@@ -18,6 +18,7 @@ O objetivo deste desafio e aplicar todo o conhecimento adquirido ao longo do mó
 - O botão de avanço deve conter uma variação de "loading", que será exibida enquanto a chamada para a API ocorre, entre a página de cotação e a de resultado;
 
 ### Importante
+- Só utilizar packages para requisições http e para gerência de estado. **Não** utilizar packages para o layout;
 - Utilizar repository;
 - Fazer gestão de estado com um método diferente do setState, escolha qualquer package de acordo com seu gosto;
 - Tokenizar as cores do Figma num arquivo separado;
