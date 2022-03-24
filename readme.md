@@ -7,7 +7,7 @@ O objetivo deste desafio e aplicar todo o conhecimento adquirido ao longo do mó
 
 ### Sua missão será:
 - Consumir a API https://docs.awesomeapi.com.br/api-de-moedas;
-- Fornecer as opções de moedas a serem cotadas, sendo elas: Real, Libra Esterlina, Dólar Americano, Dólar Canadense, Peso Argentino e Iene;
+- Fornecer as opções de moedas a serem cotadas, sendo elas: Real, Libra Esterlina, Dólar Americano, Peso Argentino e Iene;
 - Seguir a proposta de layout do Figma https://www.figma.com/file/BagX31a8VTHzCldH9vsEvF/Cotador?node-id=0%3A1;
 - Exibir as telas em uma PageView com indicador de página ativa;
     - Bloquear o avanço nas páginas através de scroll;
