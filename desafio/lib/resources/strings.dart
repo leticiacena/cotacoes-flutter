@@ -3,6 +3,17 @@ class Strings {
   static const appBarTitle2 = 'Cotação';
   static const appBarTitle3 = 'Resultado';
   static const message1 = 'Selecione uma moeda base para as converções';
+  static const prox = 'Próximo';
+  static const done = 'Concluído';
+  var _selectedCoin = '';
+
+  get selectedCoin => _selectedCoin;
+
+  set selectedCoin(selectedCoin) {
+    _selectedCoin = selectedCoin;
+  }
+
+  static const List<String> selectedCoins = [];
   static const real = 'Real';
   static const libra = 'Libra';
   static const ester = 'Esterlina';

@@ -4,7 +4,7 @@ import 'package:desafio/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:desafio/resources/strings.dart';
 
-String? selectedCoin; //talvez devesse ser global
+String selectedCoin = ''; //talvez devesse ser global
 bool selectedCoinTap = false;
 
 class ConversionMain extends StatefulWidget {
@@ -20,17 +20,7 @@ class ConversionMainState extends State<ConversionMain> {
   PageController pageController = PageController();
   bool allowScroll = true;
 
-  void onItemPressed(int index) {
-    // pagepageController.animateToPage(
-    //   index,
-    //   duration: const Duration(milliseconds: 400),
-    //   curve: Curves.bounceInOut,
-    // );
-    setState(() {
-      currentPage = index;
-      pageController.jumpToPage(1);
-    });
-  }
+  static get pageIndex => null;
 
   void onPageChanged(int page) {
     setState(() {
@@ -39,22 +29,30 @@ class ConversionMainState extends State<ConversionMain> {
   }
 
   List<Widget> pages = [
-    PageViewItem1(message: Strings.message1, pageTitle: Strings.appBarTitle1),
-    PageViewItem2(
-        message: Strings.message2('Dólar'), pageTitle: Strings.appBarTitle2),
-    PageViewItem(
-        message: Strings.message3('Euro'), pageTitle: Strings.appBarTitle3),
+    PageViewScreen(
+        message: Strings.message1,
+        pageTitle: Strings.appBarTitle1,
+        pageIndex: 0),
+    PageViewScreen(
+        message: Strings.message2(selectedCoin),
+        pageTitle: Strings.appBarTitle2,
+        pageIndex: 1),
+    PageViewScreen(
+        message: Strings.message3('Euro'),
+        pageTitle: Strings.appBarTitle3,
+        pageIndex: 2),
   ];
 
   void changeTitle() {
-    setState(() {
-      if (currentPage == 1) {
-        pageTitle = Strings.appBarTitle2;
-      } else if (currentPage == 2) {
-        pageTitle = Strings.appBarTitle3;
-      }
-    });
+    setState(() {});
   }
+
+  void onPressed() {
+    //checar se algo foi selecionado
+    //pular para a proxima pagina
+  }
+
+  String buttonTitle = pageIndex == 1 ? Strings.done : Strings.prox;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +66,7 @@ class ConversionMainState extends State<ConversionMain> {
           itemCount: pages.length,
           itemBuilder: (context, int index) {
             if (index > 0) {
+              //a implementar
               // allowScroll = false;
             }
             return pages[index];
@@ -91,83 +90,55 @@ class ConversionMainState extends State<ConversionMain> {
                           ? Colors.blueAccent
                           : Colors.grey),
                 );
-                onItemPressed(index);
               }),
             ),
           ],
         ),
-      ],
-    );
-  }
-
-  List<String> items = ['Dólar', 'Euro', 'Real'];
-
-  Widget PageItemNew() {
-    return Column(
-      children: [
-        Center(
-          child: Text('anything'),
+        Container(
+          padding: const EdgeInsets.all(10),
+          alignment: Alignment.bottomRight,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+            ),
+            child: Text(
+              buttonTitle,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
         ),
-
-        /*ListView(
-        children: [
-          const Text('Testando'),
-          ElevatedButton(onPressed: () {}, child: const Text('Trial')),
-        ],
-      ), */
-
-        /* ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-                title: Text(
-              items[index],
-              style: TextStyle(color: Colors.white),
-            )); /*,
-              onTap: (int index) {
-                // pagepageController.animateToPage(
-                //   index,
-                //   duration: const Duration(milliseconds: 400),
-                //   curve: Curves.bounceInOut,
-                // );
-                setState(() {
-                  currentPage = index;
-                  pageController.jumpToPage(0);
-                });
-              //}(index));
-              //},
-            );
-          }),*/
-          },
-        ),*/
       ],
     );
   }
-
-  /*@override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
-  }*/
 }
 
-class PageViewItem extends StatefulWidget {
+class PageViewScreen extends StatefulWidget {
   var message;
   var pageTitle;
+  var pageIndex;
 
-  PageViewItem({Key? key, required this.message, required this.pageTitle})
+  PageViewScreen(
+      {Key? key,
+      required this.message,
+      required this.pageTitle,
+      required this.pageIndex})
       : super(key: key);
 
   @override
-  State<PageViewItem> createState() =>
-      _PageViewItemState(message: message, pageTitle: pageTitle);
+  State<PageViewScreen> createState() => _PageViewScreenState(
+      message: message, pageTitle: pageTitle, pageIndex: pageIndex);
 }
 
-class _PageViewItemState extends State<PageViewItem> {
+class _PageViewScreenState extends State<PageViewScreen> {
   var message;
   var pageTitle;
+  var pageIndex;
 
-  _PageViewItemState({required this.message, required this.pageTitle});
+  _PageViewScreenState(
+      {required this.message,
+      required this.pageTitle,
+      required this.pageIndex});
 
   int currentPage = 0;
   PageController pageController = PageController();
@@ -181,6 +152,43 @@ class _PageViewItemState extends State<PageViewItem> {
     setState(() {
       currentPage = index;
       pageController.jumpToPage(1);
+    });
+  }
+
+  //Com Listview
+
+  List<Color> iconColor = [
+    ColorItems().gray,
+    ColorItems().gray,
+    ColorItems().gray,
+    ColorItems().gray
+  ];
+
+  // = ColorItems().gray;
+  List<Color> textColor = [
+    ColorItems().gray,
+    ColorItems().gray,
+    ColorItems().gray,
+    ColorItems().gray
+  ];
+
+  bool tapOn = false;
+  var cont;
+
+  onTapListTileCoin(int index) {
+    //cont++;
+    setState(() {
+      // selectedCoin = widget.name;
+
+      if (iconColor[index] == ColorItems().gray) {
+        // selectedCoinTap = true;
+        iconColor[index] = ColorItems().blue;
+        textColor[index] = ColorItems().blue;
+      } else {
+        iconColor[index] = ColorItems().gray;
+        textColor[index] = ColorItems().gray;
+        //  selectedCoinTap = false;
+      }
     });
   }
 
@@ -202,42 +210,34 @@ class _PageViewItemState extends State<PageViewItem> {
           Center(
             child: Text(widget.message),
           ),
-          CardCoin(name: Strings.real),
+          /*CardCoin(name: Strings.real),
           CardCoin(name: Strings.libra),
           CardCoin(name: Strings.ester),
           CardCoin(name: Strings.dolar),
           CardCoin(name: Strings.peso),
-          CardCoin(name: Strings.iene),
-
-          /*ListView(
-          children: [
-            const Text('Testando'),
-            ElevatedButton(onPressed: () {}, child: const Text('Trial')),
-          ],
-        ), /**/
-         ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  items[index],
-                  style: const TextStyle(color: Colors.white),
-                ),
-                 onTap: (int index) {
-                  // pagepageController.animateToPage(
-                  //   index,
-                  //   duration: const Duration(milliseconds: 400),
-                  //   curve: Curves.bounceInOut,
-                  // );
-                  setState(() {
-                    currentPage = index;
-                    pageController.jumpToPage(0);
-                  });
-                //}(index));
-                //},
-              );
-              );
-            }),*/
+          CardCoin(name: Strings.iene),*/
+          /*Expanded(
+            child: ListView.builder(
+              itemCount: Strings.moedas.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.all(12),
+                  child: ListTile(
+                    leading: const Icon(Icons.attach_money_sharp),
+                    enabled: true,
+                    //hoverColor: colorHover,
+                    //iconColor: iconColor[index],
+                    //   textColor: textColor[index],
+                    title: Text(
+                      Strings.moedas[index],
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    onTap: onTapListTileCoin(index),
+                  ),
+                );
+              },
+            ),
+          ),*/
         ],
       ),
     );
@@ -249,8 +249,9 @@ class _PageViewItemState extends State<PageViewItem> {
 
 class CardCoin extends StatefulWidget {
   var name;
+  var pageIndex;
 
-  CardCoin({Key? key, this.name}) : super(key: key);
+  CardCoin({Key? key, this.name, this.pageIndex}) : super(key: key);
 
   @override
   State<CardCoin> createState() => _CardCoinState();
@@ -260,12 +261,13 @@ class _CardCoinState extends State<CardCoin> {
   Color iconColor = ColorItems().gray;
   Color textColor = ColorItems().gray;
   bool tapOn = false;
+  bool enabled = true;
 
   void onTapCardCoin() {
     setState(() {
-      selectedCoin = widget.name;
-
-      if (iconColor == ColorItems().gray && !selectedCoinTap) {
+      Strings().selectedCoin(widget.name);
+      enabled = false;
+      if (iconColor == ColorItems().gray) {
         selectedCoinTap = true;
         iconColor = ColorItems().blue;
         textColor = ColorItems().blue;
@@ -287,8 +289,9 @@ class _CardCoinState extends State<CardCoin> {
           ListTile(
             leading: const Icon(Icons.attach_money_sharp),
             title: Text(widget.name),
-            enabled: true,
+            enabled: enabled,
             //hoverColor: colorHover,
+            //shape: ShapeBorder.lerp(ShapeBorder().paint(canvas, rect), , 4),
             iconColor: iconColor,
             textColor: textColor,
             //hoverColor: colorHover,
