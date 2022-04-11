@@ -25,8 +25,6 @@ class ConversionMainState extends State<ConversionMain> {
     super.initState();
     _bloc = context.read<ConversionBloc>();
     _bloc.getScreenCoins();
-
-    //_blocListener = context.
   }
 
   int currentPage = 0;
@@ -41,13 +39,6 @@ class ConversionMainState extends State<ConversionMain> {
       currentPage = page;
     });
   }
-
-  void onPressed() {
-    //checar se algo foi selecionado
-    //pular para a proxima pagina
-  }
-
-  //PageController tabController = pageController.jumpToPage(1);
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +122,9 @@ class ConversionMainState extends State<ConversionMain> {
         });
   }
 }
+
+/*Código mantido apenas para fins de estudos/testes
+Entretanto daqui em diante não foi mais utilizado*/
 
 class PageViewScreen extends StatefulWidget {
   final String message;

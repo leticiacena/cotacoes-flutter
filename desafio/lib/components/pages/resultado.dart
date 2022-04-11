@@ -32,9 +32,8 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  final list = ['BRL', 'EUR', 'BTC'];
-  late final ConversionBloc _bloc2;
-  var results2;
+  //late final ConversionBloc _bloc2;
+  //var results2;
 
   @override
   void initState() {
@@ -118,14 +117,10 @@ class _ResultPageState extends State<ResultPage> {
                               color: colorCotation(widget
                                   .conversionBloc.conversions[index].value)),
                         ),
-
-                        //- vou passar isso quando for a tela 2
-
                         title: Text(
                           widget.coinsList[index],
                           style: TextStyle(color: ColorItems().gray),
                         ),
-                        //onTap: () => onTapListTileCoin(index, widget.pageIndex),
                       ),
                     ),
                   );
