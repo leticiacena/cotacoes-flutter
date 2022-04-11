@@ -4,7 +4,7 @@ class Strings {
   static const appBarTitle3 = 'Resultado';
   static const message1 = 'Selecione uma moeda base para as converções';
   static const prox = 'Próximo';
-  static const done = 'Concluído';
+  static const done = 'Concluir';
   var _selectedCoin = '';
 
   get selectedCoin => _selectedCoin;

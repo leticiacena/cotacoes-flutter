@@ -3,89 +3,70 @@ import 'dart:html';
 import 'package:desafio/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:desafio/resources/strings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cardCoin.dart';
+import '../../blocs/bloc.dart';
+import '../../models/enum.dart';
 
-class PageViewItem2 extends StatefulWidget {
-  var message;
-  var pageTitle;
+class SelectCotationPage extends StatefulWidget {
+  final List<String> alteredList;
+  List<String> baseCoin;
+  List<String> selectedCoins;
+  PageController jumpToPage;
 
-  PageViewItem2({Key? key, required this.message, required this.pageTitle})
+  SelectCotationPage(
+      {Key? key,
+      required this.alteredList,
+      required this.baseCoin,
+      required this.jumpToPage,
+      required this.selectedCoins})
       : super(key: key);
 
   @override
-  State<PageViewItem2> createState() =>
-      _PageViewItemState(message: message, pageTitle: pageTitle);
+  State<SelectCotationPage> createState() => _SelectCotationPageState();
 }
 
-class _PageViewItemState extends State<PageViewItem2> {
-  var message;
-  var pageTitle;
+class _SelectCotationPageState extends State<SelectCotationPage> {
+  var results;
 
-  _PageViewItemState({required this.message, required this.pageTitle});
+  @override
+  void initState() {
+    super.initState();
+  }
 
   int currentPage = 0;
-  int cont = 0;
   PageController pageController = PageController();
 
-  void onItemPressed(int index) {
-    // pagepageController.animateToPage(
-    //   index,
-    //   duration: const Duration(milliseconds: 400),
-    //   curve: Curves.bounceInOut,
-    // );
-    setState(() {
-      currentPage = index;
-      pageController.jumpToPage(1);
-    });
-  }
-
-  void onPressed() {
-    //checar se algo foi selecionado
-    //pular para a proxima pagina
-  }
-
-  List<Color> iconColor = [
-    ColorItems().gray,
-    ColorItems().gray,
-    ColorItems().gray,
-    ColorItems().gray
-  ];
-
-  // = ColorItems().gray;
-  List<Color> textColor = [
-    ColorItems().gray,
-    ColorItems().gray,
-    ColorItems().gray,
-    ColorItems().gray
-  ];
-
-  bool tapOn = false;
+  List<bool> tapOn = [false, false, false, false, false];
 
   onTapListTileCoin(int index) {
-    cont++;
+    //cont++;
     setState(() {
-      // selectedCoin = widget.name;
+      print('*** chegoooooou aqui ***');
+      tapOn[index] = !tapOn[index];
 
-      if (iconColor[index] == ColorItems().gray) {
-        // selectedCoinTap = true;
-        iconColor[index] = ColorItems().blue;
-        textColor[index] = ColorItems().blue;
-      } else {
-        iconColor[index] = ColorItems().gray;
-        textColor[index] = ColorItems().gray;
-        //  selectedCoinTap = false;
-      }
+      //dar um jeito de e
+      widget.selectedCoins.add(widget.alteredList[index]);
     });
+  }
+
+  Future<void> jumpPage() async {
+    await widget.jumpToPage.animateToPage(2,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+  }
+
+  Color tapOnOff(int index) {
+    return tapOn[index] ? ColorItems().blue : ColorItems().gray;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          pageTitle,
-          style: const TextStyle(color: Colors.blue),
+        //componentizar - deixar isso aqui por fora de forma que um metodo mais acima passe como parametro o titulo
+        title: const Text(
+          Strings.appBarTitle2,
+          style: TextStyle(color: Colors.blue),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(31, 93, 93, 93),
@@ -94,31 +75,36 @@ class _PageViewItemState extends State<PageViewItem2> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Text(widget.message),
+            child: Text(Strings.message2(
+                widget.baseCoin.first)), //passar aqui bloc da moeda selecionada
           ),
-          /*CardCoin(name: Strings.real),
-          CardCoin(name: Strings.libra),
-          CardCoin(name: Strings.ester),
-          CardCoin(name: Strings.dolar),
-          CardCoin(name: Strings.peso),
-          CardCoin(name: Strings.iene),*/
           Expanded(
             child: ListView.builder(
-              itemCount: Strings.moedas.length - 1,
+              itemCount: widget.alteredList.length,
               itemBuilder: (context, index) {
+                final moeda = widget.alteredList[index];
+
                 return Card(
-                  margin: EdgeInsets.all(12),
-                  child: ListTile(
-                    leading: const Icon(Icons.attach_money_sharp),
-                    enabled: true,
-                    //hoverColor: colorHover,
-                    iconColor: iconColor[index],
-                    textColor: textColor[index],
-                    title: Text(
-                      Strings.moedas[index],
-                      style: const TextStyle(color: Colors.white),
+                  margin: const EdgeInsets.all(12),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: tapOn[index]
+                          ? ColorItems().blue
+                          : ColorItems().darkGray,
+                    )),
+                    child: ListTile(
+                      selectedColor: ColorItems().blue,
+                      enabled: true,
+                      leading: const Icon(Icons.attach_money_sharp),
+                      //hoverColor: colorHover[],
+                      iconColor: tapOnOff(index),
+                      textColor: tapOnOff(index),
+                      title: Text(
+                        moeda,
+                      ),
+                      onTap: () => onTapListTileCoin(index),
                     ),
-                    onTap: onTapListTileCoin(index),
                   ),
                 );
               },
@@ -128,12 +114,19 @@ class _PageViewItemState extends State<PageViewItem2> {
             padding: const EdgeInsets.all(10),
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
-              onPressed: onPressed,
+              //onPressed: pageController,//.jumpToPage(2),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.blue),
               ),
+              onPressed: () {
+                if (widget.selectedCoins.isNotEmpty) {
+                  jumpPage();
+                } else {
+                  //Mostrar aviso
+                }
+              },
               child: const Text(
-                'Próximo',
+                Strings.prox,
                 style: TextStyle(color: Colors.white),
               ),
             ),
