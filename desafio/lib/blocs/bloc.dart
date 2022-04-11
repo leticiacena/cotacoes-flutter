@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:desafio/models/coins_dto.dart';
 import '../models/enum.dart';
 import '../repository/api_call.dart';
 import 'conversion_state.dart';
@@ -16,7 +17,7 @@ class ConversionBloc extends Cubit<CoinMainState> {
   List<String> alteredList; // = ['BRL', 'EUR', 'BTC'];
   List<String> baseCoin = [];
   List<String> selectedCoins = [];
-  var conversions = [];
+  List<CoinsDto> conversions = [];
 
   void setSelectedCoin(String baseCoin) {
     //this.baseCoin = convertStringToEnum(baseCoin);
@@ -40,8 +41,9 @@ class ConversionBloc extends Cubit<CoinMainState> {
       print('baseCode: $baseCode e lista ${selectedCodes.first}');
 
       conversions = await repository.getCoins(baseCode, selectedCodes);
-      //emit(ConversionShowState(conversions));
+      emit(ConversionShowState(conversions));
       //emit(CoinState(alteredList, selectedCodes, conversions));
+      //CoinState.empty(code, selectedCoins, conversions);
       return conversions;
       //final jsonList = await repository.getCoins(dados do front);
 

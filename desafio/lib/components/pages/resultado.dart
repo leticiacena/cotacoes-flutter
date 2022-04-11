@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:desafio/blocs/conversion_state.dart';
 import 'package:desafio/resources/colors.dart';
@@ -12,15 +12,17 @@ import '../../models/enum.dart';
 class ResultPage extends StatefulWidget {
   final List<String> coinsList;
   List<String> baseCoin;
-  var results = [];
+  //var results;
   Object? stateResult;
+  ConversionBloc conversionBloc;
   var t;
 
   ResultPage(
       {Key? key,
       required this.coinsList,
       required this.baseCoin,
-      required this.results,
+      //required this.results,
+      required this.conversionBloc,
       this.stateResult,
       this.t})
       : super(key: key);
@@ -39,10 +41,12 @@ class _ResultPageState extends State<ResultPage> {
     super.initState();
     //_bloc2 = context.read<ConversionBloc>();
     //widget.results = _bloc2.getScreenCoins();
-    //widget.results;
     //widget.
     // _bloc2 = widget.t;
     // print('&*&*results: ${widget.results.first}');
+    //print('teste: *** ${widget.results.first}');
+    //_bloc2.getScreenCoins();
+    widget.conversionBloc.getScreenCoins();
   }
 
   int currentPage = 0;
@@ -83,10 +87,13 @@ class _ResultPageState extends State<ResultPage> {
           Expanded(
             child: ListView.builder(
                 itemCount: widget.coinsList.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   //if ( is ConversionShowState) {}
 
                   //print(widget.results);
+                  //widget.conversionBloc.getScreenCoins();
 
                   return Card(
                     margin: const EdgeInsets.all(12),
@@ -100,12 +107,16 @@ class _ResultPageState extends State<ResultPage> {
                         enabled: true,
                         leading: const Icon(Icons.attach_money_sharp),
                         trailing: Text(
-                          /*//widget.results[index]
+                          //widget.results[index]
                           //.conversions[index].value.toString(),
                           //widget.t[index].value.toString(),
-                          */
-                          widget.results[index].value.toString(),
-                          style: TextStyle(color: ColorItems().green),
+
+                          // widget.results[index].value.toString(),
+                          widget.conversionBloc.conversions[index].value
+                              .toString(),
+                          style: TextStyle(
+                              color: colorCotation(widget
+                                  .conversionBloc.conversions[index].value)),
                         ),
 
                         //- vou passar isso quando for a tela 2

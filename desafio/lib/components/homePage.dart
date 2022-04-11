@@ -74,13 +74,15 @@ class ConversionMainState extends State<ConversionMain> {
                       alteredList: _bloc.alteredList,
                       baseCoin: _bloc.baseCoin,
                       selectedCoins: _bloc.selectedCoins,
+                      //conversions: _bloc,
                       jumpToPage: pageController,
                     ),
 
                     ResultPage(
                       baseCoin: _bloc.baseCoin,
                       coinsList: _bloc.selectedCoins,
-                      results: _bloc.conversions,
+                      //results: _bloc.conversions,
+                      conversionBloc: _bloc,
                       //t: _bloc.getScreenCoins(),
                       //,
                       //stateResult: state is ConversionShowState,
@@ -113,6 +115,17 @@ class ConversionMainState extends State<ConversionMain> {
               ],
             );
           } else {
+            if (state is ConversionShowState) {
+              return ResultPage(
+                baseCoin: _bloc.baseCoin,
+                coinsList: _bloc.selectedCoins,
+                //results: _bloc.conversions,
+                conversionBloc: _bloc,
+                //t: _bloc.getScreenCoins(),
+                //,
+                //stateResult: state is ConversionShowState,
+              );
+            }
             throw CoinsApiError();
           }
         });

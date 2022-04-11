@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:desafio/models/coins_dto.dart';
 import 'package:desafio/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:desafio/resources/strings.dart';
@@ -13,14 +14,15 @@ class SelectCotationPage extends StatefulWidget {
   List<String> baseCoin;
   List<String> selectedCoins;
   PageController jumpToPage;
+  //ConversionBloc conversions;
 
-  SelectCotationPage(
-      {Key? key,
-      required this.alteredList,
-      required this.baseCoin,
-      required this.jumpToPage,
-      required this.selectedCoins})
-      : super(key: key);
+  SelectCotationPage({
+    Key? key,
+    required this.alteredList,
+    required this.baseCoin,
+    required this.jumpToPage,
+    required this.selectedCoins,
+  }) : super(key: key);
 
   @override
   State<SelectCotationPage> createState() => _SelectCotationPageState();
@@ -120,6 +122,9 @@ class _SelectCotationPageState extends State<SelectCotationPage> {
               ),
               onPressed: () {
                 if (widget.selectedCoins.isNotEmpty) {
+                  // widget.conversions.getScreenCoins();
+
+                  //widget.selectedCoins
                   jumpPage();
                 } else {
                   //Mostrar aviso
